@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping(value = "/vue")
 public class MyvueController {
     /**
-     * 开通
+     * 页面查询
      *
      * @param reqObj
      * @return
@@ -34,5 +34,14 @@ public class MyvueController {
         netPage.setTotalSize(students.size());
 //        throw new Exception("测试错误！");
         return netPage;
+    }
+
+    @RequestMapping(value = "/calTender", method = RequestMethod.POST, consumes = "application/json")
+    public Object calTender(@RequestBody JSONObject reqObj) throws Exception {
+        // 计算好标的价格
+
+        // 计算出前五名的价格，将数据存储到数据库
+
+        return null;
     }
 }
