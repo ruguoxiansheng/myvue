@@ -1,6 +1,8 @@
 package com.example.myvue.dao;
 
 import com.example.myvue.model.PersonToPhone;
+import org.springframework.stereotype.Service;
+
 
 public interface PersonToPhoneMapper {
     /**

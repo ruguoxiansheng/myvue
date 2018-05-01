@@ -2,9 +2,12 @@ package com.example.myvue.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.myvue.model.NetPage;
+import com.example.myvue.model.QuotePrice;
 import com.example.myvue.model.Student;
+import com.example.myvue.service.CalTenderService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,8 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/vue")
 public class MyvueController {
+    @Resource
+    private CalTenderService calTenderService;
     /**
      * 页面查询
      *
@@ -36,12 +41,27 @@ public class MyvueController {
         return netPage;
     }
 
+    /**
+     * 这个接口的作用是计算标底价格
+     * @param comitObj
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/calTender", method = RequestMethod.POST, consumes = "application/json")
-    public Object calTender(@RequestBody JSONObject reqObj) throws Exception {
-        // 计算好标的价格
-
-        // 计算出前五名的价格，将数据存储到数据库
-
+    public Object calTender(@RequestBody JSONObject comitObj) throws Exception {
+        calTenderService.calCulateQuotePrice(comitObj);
         return null;
+    }
+
+    /**
+     * 这个接口的作用是异步调用根据用户的id，项目编号，判断用户是否计算过
+     * @param queryCondition
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/alreadyCalTender", method = RequestMethod.POST, consumes = "application/json")
+    public Object alreadyCalTender(@RequestBody JSONObject queryCondition) throws Exception {
+      // 查询表quote_price
+        return true;
     }
 }

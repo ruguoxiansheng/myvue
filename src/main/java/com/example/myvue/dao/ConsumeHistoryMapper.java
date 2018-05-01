@@ -1,6 +1,8 @@
 package com.example.myvue.dao;
 
 import com.example.myvue.model.ConsumeHistory;
+import org.springframework.stereotype.Service;
+
 
 public interface ConsumeHistoryMapper {
     /**

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.myvue.dao.CompanyQuotePriceMapper" >
+
+    <insert id="insertBatch" parameterType="com.example.myvue.model.CompanyQuotePrice" useGeneratedKeys="true" keyProperty="quoteId" keyColumn="quote_id">
+        insert into company_quote_price (quote_id, company_name, company_value,
+        create_time) values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.quoteId},#{item.companyName},#{item.companyValue},#{item.createTime})
+        </foreach>
+    </insert>
+
+</mapper>

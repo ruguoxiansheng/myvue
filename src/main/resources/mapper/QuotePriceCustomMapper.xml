@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.myvue.dao.QuotePriceMapper">
+
+  <insert id="insertBatch" parameterType="com.example.myvue.model.QuotePrice" >
+    insert into quote_price (quote_price_id, consumer_id, project_number,
+    quote_id)
+    values
+    <foreach collection="list" item="item" separator=",">
+     (#{item.quotePriceId,jdbcType=BIGINT}, #{item.consumerId,jdbcType=BIGINT}, #{item.projectNumber,jdbcType=VARCHAR},
+    #{item.quoteId,jdbcType=BIGINT})
+    </foreach>
+
+  </insert>
+
+</mapper>
