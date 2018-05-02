@@ -3,10 +3,9 @@
 <mapper namespace="com.example.myvue.dao.CompanyQuotePriceMapper" >
 
     <insert id="insertBatch" parameterType="com.example.myvue.model.CompanyQuotePrice" useGeneratedKeys="true" keyProperty="quoteId" keyColumn="quote_id">
-        insert into company_quote_price (quote_id, company_name, company_value,
-        create_time) values
+        insert into company_quote_price (quote_id, company_name, company_value) values
         <foreach collection="list" item="item" separator=",">
-            (#{item.quoteId},#{item.companyName},#{item.companyValue},#{item.createTime})
+            (#{item.quoteId},#{item.companyName},#{item.companyValue})
         </foreach>
     </insert>
 

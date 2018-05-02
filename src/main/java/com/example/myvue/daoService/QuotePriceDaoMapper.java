@@ -19,6 +19,8 @@ public class QuotePriceDaoMapper {
     private CompanyQuotePriceDaoMapper companyQuotePriceDaoMapper;
 
     public List<QuotePrice> insertSelective(QuotePrice quotePrice) {
+
+        insertValue(quotePrice);
     List<CompanyQuotePrice> companyQuotePrices =quotePrice.getCompanyQuotePriceList();
         // 批量插入之后，返回id
         companyQuotePriceDaoMapper.insertBatch(companyQuotePrices);
@@ -29,8 +31,12 @@ public class QuotePriceDaoMapper {
             quotePrice.setQuoteId(companyQuotePrices.get(i).getQuoteId());
             quotePrices.add(quotePrice);
         }
-        insertBatch(quotePrices);
-        return null;
+
+        return quotePrices;
+    }
+
+    private void insertValue(QuotePrice quotePrice) {
+        quotePriceMapper.insertValue(quotePrice);
     }
 
     private void insertBatch(List<QuotePrice> quotePrices) {
