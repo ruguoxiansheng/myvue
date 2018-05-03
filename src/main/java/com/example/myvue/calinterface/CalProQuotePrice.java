@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface CalProQuotePrice {
 
-    public ShouldQuotePrice calShouldQuotePrice(List<QuotePrice> quotePrices);
+    public ShouldQuotePrice calShouldQuotePrice(QuotePrice quotePrices);
 }

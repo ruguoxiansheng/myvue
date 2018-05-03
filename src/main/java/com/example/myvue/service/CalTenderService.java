@@ -41,12 +41,12 @@ public class CalTenderService {
         // 把传输过来的数据全部入库，加事物,将数据的id返回
        QuotePrice quotePrice = new QuotePrice();
         quotePrice.generator(comitObj);
-        List<QuotePrice> quotePrices = quotePriceDaoMapper.insertSelective(quotePrice);
+        List<CompanyQuotePrice> comQuotePrices = quotePriceDaoMapper.insertSelective(quotePrice);
 
         // 计算应中标底
-        ShouldQuotePrice shouleQuotePrice = calProQuotePriceImp.calShouldQuotePrice(quotePrices);
+        ShouldQuotePrice shouleQuotePrice = calProQuotePriceImp.calShouldQuotePrice(quotePrice);
         //计算出前五的价格
-        List<ProQuotePrice> proQuotePrices = calProQuotePriceImp.calProQuotePrice(shouleQuotePrice);
+        List<ProQuotePrice> proQuotePrices = calProQuotePriceImp.calProQuotePrice(shouleQuotePrice,quotePrice);
 
         // 添加一个事物，将应中标底和前五的价格全部入库
 

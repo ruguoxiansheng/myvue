@@ -18,28 +18,26 @@ public class QuotePriceDaoMapper {
     @Resource
     private CompanyQuotePriceDaoMapper companyQuotePriceDaoMapper;
 
-    public List<QuotePrice> insertSelective(QuotePrice quotePrice) {
+    /**
+     * 用户输入的数据入库
+     * @param quotePrice
+     * @return List<CompanyQuotePrice>
+     */
+    public List<CompanyQuotePrice> insertSelective(QuotePrice quotePrice) {
 
+        // 插入数据之后，返回id
         insertValue(quotePrice);
-    List<CompanyQuotePrice> companyQuotePrices =quotePrice.getCompanyQuotePriceList();
+        List<CompanyQuotePrice> companyQuotePrices =quotePrice.getCompanyQuotePriceList();
+        // 把id给对象
+        for (int i = 0; i < companyQuotePrices.size();i++) {
+            companyQuotePrices.get(i).setQuotePriceId(quotePrice.getQuotePriceId());
+        }
         // 批量插入之后，返回id
         companyQuotePriceDaoMapper.insertBatch(companyQuotePrices);
-        List<QuotePrice> quotePrices = new ArrayList<>(companyQuotePrices.size());
-        // 把id给对象
-
-        for (int i = 0; i < companyQuotePrices.size();i++) {
-            quotePrice.setQuoteId(companyQuotePrices.get(i).getQuoteId());
-            quotePrices.add(quotePrice);
-        }
-
-        return quotePrices;
+        return companyQuotePrices;
     }
 
     private void insertValue(QuotePrice quotePrice) {
         quotePriceMapper.insertValue(quotePrice);
-    }
-
-    private void insertBatch(List<QuotePrice> quotePrices) {
-        quotePriceMapper.insertBatch(quotePrices);
     }
 }

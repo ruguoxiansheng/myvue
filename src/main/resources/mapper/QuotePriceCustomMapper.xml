@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.myvue.dao.QuotePriceMapper">
 
-  <insert id="insertBatch" parameterType="com.example.myvue.model.QuotePrice" useGeneratedKeys="true" keyProperty="quotePriceId" keyColumn="quote_price_id">
+<!--  <insert id="insertBatch" parameterType="com.example.myvue.model.QuotePrice" useGeneratedKeys="true" keyProperty="quotePriceId" keyColumn="quote_price_id">
     insert into quote_price (quote_price_id, consumer_id, project_number,
     quote_id)
     values
@@ -11,12 +11,12 @@
     #{item.quoteId,jdbcType=BIGINT})
     </foreach>
 
-  </insert>
+  </insert>-->
 
   <insert id="insertValue" parameterType="com.example.myvue.model.QuotePrice" useGeneratedKeys="true" keyProperty="quotePriceId" keyColumn="quote_price_id">
-    insert into quote_price (quote_price_id, consumer_id, project_number)
+    insert into quote_price (quote_price_id,consumer_id,project_number)
     values
-      (#{quotePriceId,jdbcType=BIGINT}, #{consumerId,jdbcType=BIGINT}, #{projectNumber,jdbcType=VARCHAR}
+      (#{quotePriceId,jdbcType=BIGINT}, #{consumerId,jdbcType=BIGINT}, #{projectNumber,jdbcType=VARCHAR})
   </insert>
 
 </mapper>
