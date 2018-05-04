@@ -14,8 +14,7 @@ public class ShouldQuotePriceDaoMapper {
     @Resource
     private ShouldQuotePriceMapper shouldQuotePriceMapper;
 
-    public List<QuotePrice> insertSelective(ShouldQuotePrice shouldQuotePrice) {
-        shouldQuotePriceMapper.insertSelective(shouldQuotePrice);
-        return null;
+    public void insert(ShouldQuotePrice shouleQuotePrice) {
+        shouldQuotePriceMapper.insert(shouleQuotePrice);
     }
 }

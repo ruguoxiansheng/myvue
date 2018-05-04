@@ -14,8 +14,7 @@ public class ProQuotePriceDaoMapper {
     @Resource
     private ProQuotePriceMapper proquotePriceMapper;
 
-    public List<QuotePrice> insertSelective(ProQuotePrice proQuotePrice) {
-        proquotePriceMapper.insertSelective(proQuotePrice);
-        return null;
+    public void insetBatch(List<ProQuotePrice> proQuotePrices) {
+        proquotePriceMapper.insertBatch(proQuotePrices);
     }
 }

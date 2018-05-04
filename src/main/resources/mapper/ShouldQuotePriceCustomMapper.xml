@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.myvue.dao.ShouldQuotePriceMapper">
+    <insert id="insert" parameterType="com.example.myvue.model.ShouldQuotePrice">
+        insert into should_quote_price (should_price, project_number,
+        consumer_id)
+        values (#{shouldPrice,jdbcType=DOUBLE}, #{projectNumber,jdbcType=VARCHAR},
+        #{consumerId,jdbcType=BIGINT})
+    </insert>
+</mapper>
