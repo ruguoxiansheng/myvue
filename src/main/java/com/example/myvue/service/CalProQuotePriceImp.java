@@ -36,7 +36,7 @@ public class CalProQuotePriceImp implements CalProQuotePrice {
         List<ProQuotePrice> proQuotePrices = new ArrayList<>(5);
         for(int i=0;i<5;i++) {
             ProQuotePrice proQuotePrice = new ProQuotePrice();
-            proQuotePrice.setProQuotePriceId(companyQuotePrices.get(i).getQuoteId());
+            proQuotePrice.setQuoteId(companyQuotePrices.get(i).getQuoteId());
             proQuotePrice.setQuotePriceId(quotePrice.getQuotePriceId());
             proQuotePrices.add(proQuotePrice);
         }

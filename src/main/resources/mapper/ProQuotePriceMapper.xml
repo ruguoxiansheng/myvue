@@ -3,11 +3,11 @@
 <mapper namespace="com.example.myvue.dao.ProQuotePriceMapper">
   <resultMap id="BaseResultMap" type="com.example.myvue.model.ProQuotePrice">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="pro_quote_price_id" jdbcType="BIGINT" property="proQuotePriceId" />
+    <result column="quote_id" jdbcType="BIGINT" property="quoteId" />
     <result column="quote_price_id" jdbcType="BIGINT" property="quotePriceId" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, pro_quote_price_id, quote_price_id
+    id, quote_id, quote_price_id
   </sql>
 
 </mapper>

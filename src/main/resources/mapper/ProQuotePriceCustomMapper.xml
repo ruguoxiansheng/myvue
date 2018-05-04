@@ -3,9 +3,9 @@
 <mapper namespace="com.example.myvue.dao.ProQuotePriceMapper">
 
     <insert id="insertBatch" parameterType="com.example.myvue.model.ProQuotePrice">
-        insert into pro_quote_price (pro_quote_price_id, quote_price_id) values
+        insert into pro_quote_price (quote_id, quote_price_id) values
         <foreach collection="list" item="item" separator=",">
-            (#{item.proQuotePriceId},#{item.quotePriceId})
+            (#{item.quoteId},#{item.quotePriceId})
         </foreach>
     </insert>
 

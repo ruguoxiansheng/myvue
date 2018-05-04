@@ -3,7 +3,7 @@ package com.example.myvue.model;
 public class ProQuotePrice {
     private Long id;
 
-    private Long proQuotePriceId;
+    private Long quoteId;
 
     private Long quotePriceId;
 
@@ -15,12 +15,12 @@ public class ProQuotePrice {
         this.id = id;
     }
 
-    public Long getProQuotePriceId() {
-        return proQuotePriceId;
+    public Long getQuoteId() {
+        return quoteId;
     }
 
-    public void setProQuotePriceId(Long proQuotePriceId) {
-        this.proQuotePriceId = proQuotePriceId;
+    public void setQuoteId(Long quoteId) {
+        this.quoteId = quoteId;
     }
 
     public Long getQuotePriceId() {
