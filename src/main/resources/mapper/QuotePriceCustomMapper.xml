@@ -19,4 +19,12 @@
       (#{quotePriceId,jdbcType=BIGINT}, #{consumerId,jdbcType=BIGINT}, #{projectNumber,jdbcType=VARCHAR})
   </insert>
 
+  <select  id="query" parameterType="Map" resultMap="BaseResultMap" >
+      select * from quote_price where
+       consumer_id=#{consumerId,jdbcType=BIGINT}
+       and
+       project_number=#{projectNumber,jdbcType=VARCHAR}
+  </select>
+
+
 </mapper>

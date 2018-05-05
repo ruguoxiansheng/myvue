@@ -17,6 +17,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 这个服务用户计算标的价格
@@ -64,4 +65,15 @@ public class CalTenderService {
         proQuotePriceDaoMapper.insetBatch(proQuotePrices);
     }
 
+    /**
+     * 根据用户的id,项目编号，查询用户是否已经传输过了标底
+     * @param queryCondition
+     */
+    public boolean queryAlreadyCalTender(Map queryCondition) {
+        QuotePrice quotePrice = quotePriceDaoMapper.query(queryCondition);
+        if (queryCondition != null) {
+            return true;
+        }
+        return false;
+    }
 }

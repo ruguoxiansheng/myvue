@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class QuotePriceDaoMapper {
@@ -39,5 +40,10 @@ public class QuotePriceDaoMapper {
 
     private void insertValue(QuotePrice quotePrice) {
         quotePriceMapper.insertValue(quotePrice);
+    }
+
+    public QuotePrice query(Map queryCondition) {
+        QuotePrice quotePrice = quotePriceMapper.query(queryCondition);
+        return quotePrice;
     }
 }

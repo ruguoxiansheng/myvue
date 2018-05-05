@@ -1,15 +1,19 @@
 package com.example.myvue.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.myvue.model.NetPage;
 import com.example.myvue.model.QuotePrice;
 import com.example.myvue.model.Student;
 import com.example.myvue.service.CalTenderService;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2018/4/19.
@@ -55,13 +59,17 @@ public class MyvueController {
 
     /**
      * 这个接口的作用是异步调用根据用户的id，项目编号，判断用户是否计算过
-     * @param queryCondition
+     * @param reqObj
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/alreadyCalTender", method = RequestMethod.POST, consumes = "application/json")
-    public Object alreadyCalTender(@RequestBody JSONObject queryCondition) throws Exception {
-      // 查询表quote_price
-        return true;
+    public Object alreadyCalTender(@RequestBody JSONObject reqObj) throws Exception {
+        Map queryCondition = JSON.toJavaObject(reqObj,Map.class);
+        if (CollectionUtils.isEmpty(queryCondition)) {
+                throw new Exception("请传入查询条件");
+        }
+        // 根据项目编号查询项目是否存在，不存在就抛异常
+        return calTenderService.queryAlreadyCalTender(queryCondition);
     }
 }
