@@ -5,13 +5,15 @@
     <id column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="pass_word" jdbcType="VARCHAR" property="passWord" />
     <result column="person_account_id" jdbcType="VARCHAR" property="personAccountId" />
     <result column="authory_type" jdbcType="INTEGER" property="authoryType" />
     <result column="id_card_num" jdbcType="VARCHAR" property="idCardNum" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
-    user_id, phone, user_name, person_account_id, authory_type, id_card_num, status
+    user_id, phone, user_name, pass_word, person_account_id, authory_type, id_card_num,
+    status
   </sql>
 
   <select id="selectAccordPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -19,6 +21,13 @@
     <include refid="Base_Column_List" />
     from user_person_object
     where phone = #{phone,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAccordPhoneAndPassWord" parameterType="Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_person_object
+    where phone = #{phone,jdbcType=VARCHAR} and pass_word=#{passWord,jdbcType=VARCHAR}
   </select>
 
   <insert id="insertSelective" parameterType="com.example.myvue.model.UserPersonObject">
@@ -32,6 +41,9 @@
       </if>
       <if test="userName != null">
         user_name,
+      </if>
+      <if test="passWord != null">
+        pass_word,
       </if>
       <if test="personAccountId != null">
         person_account_id,
@@ -55,6 +67,9 @@
       </if>
       <if test="userName != null">
         #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="passWord != null">
+        #{passWord,jdbcType=VARCHAR},
       </if>
       <if test="personAccountId != null">
         #{personAccountId,jdbcType=VARCHAR},

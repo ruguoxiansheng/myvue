@@ -2,6 +2,7 @@ package com.example.myvue.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.myvue.daoService.InvalidCodeDaoMapper;
 import com.example.myvue.model.NetPage;
 import com.example.myvue.model.Student;
 import com.example.myvue.myException.McException;
@@ -24,25 +25,28 @@ public class RegisterLoginController {
 
     @Resource
     private RegisterLoginService registerLoginService;
+
     /**
      * 是否注册
-     * @param phone
+     * @param reqObj
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/isRegister", method = RequestMethod.POST, consumes = "application/json")
-    public Boolean isRegister(@RequestParam String phone) throws McException{
+    public Object isRegister(@RequestBody JSONObject reqObj) throws McException{
+        String phone = reqObj.getString("phone");
         return   registerLoginService.isRegister(phone);
     }
 
     /**
      * 是否登陆
-     * @param phone
+     * @param reqObj
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/isLogin", method = RequestMethod.POST, consumes = "application/json")
-    public Boolean isLogin(@RequestParam String phone) throws McException{
+    public Object isLogin(@RequestBody  JSONObject reqObj) throws McException{
+        String phone = reqObj.getString("phone");
         return   registerLoginService.isLogin(phone);
     }
 
@@ -53,15 +57,10 @@ public class RegisterLoginController {
      * @throws Exception
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = "application/json")
-    public Boolean register(@RequestBody JSONObject reqObj) throws McException {
+    public Object register(@RequestBody JSONObject reqObj) throws McException {
         // 校验字段
         String phone = reqObj.getString("phone");
-
-        if (registerLoginService.isRegister(phone)){
-            return false;
-        }
-        // 如果用户不存在就注册用户，生成两张表user_person_object，account
-        registerLoginService.register(phone);
+        registerLoginService.register(reqObj);
         return true;
     }
 
@@ -72,13 +71,25 @@ public class RegisterLoginController {
      * @throws McException
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
-    public String login(@RequestBody JSONObject reqObj) throws McException {
+    public Object login(@RequestBody JSONObject reqObj) throws McException {
         // 校验字段
         String phone = reqObj.getString("phone");
-        if (registerLoginService.isLogin(phone)){
-          throw new McException("用户已经登陆！","SERE-1");
-        }
-        // 如果用户不存在就注册用户，生成两张表user_person_object，account
-       return registerLoginService.login(phone);
+       return registerLoginService.login(reqObj);
+    }
+
+    /**
+     * 验证码
+     * @param reqObj
+     * @return
+     * @throws McException
+     */
+    @RequestMapping(value = "/invalidCode", method = RequestMethod.POST, consumes = "application/json")
+    public Object invalidCode(@RequestBody JSONObject reqObj) throws McException {
+        // 校验字段
+        String phone = reqObj.getString("phone");
+
+        registerLoginService.invalid(phone);
+
+        return "获取验证码成功！";
     }
 }

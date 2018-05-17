@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.myvue.dao.InvalidCodeMapper" >
+  <resultMap id="BaseResultMap" type="com.example.myvue.model.InvalidCode" >
+    <id column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="invalid_code" property="invalidCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    phone, invalid_code
+  </sql>
+
+  <insert id="replace" parameterType="com.example.myvue.model.InvalidCode" >
+    replace into invalid_code (phone, invalid_code)
+    values (#{phone,jdbcType=VARCHAR}, #{invalidCode,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="selectByPhone" parameterType="Map" resultMap="BaseResultMap">
+      select * from invalid_code
+    where phone =  (#{phone,jdbcType=VARCHAR})
+  </select>
+
+</mapper>

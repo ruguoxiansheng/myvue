@@ -3,6 +3,8 @@ package com.example.myvue.daoService;
 import com.example.myvue.dao.QuotePriceMapper;
 import com.example.myvue.model.CompanyQuotePrice;
 import com.example.myvue.model.QuotePrice;
+import com.example.myvue.myException.DataBaseException;
+import com.example.myvue.myException.McException;
 import com.sun.org.apache.xpath.internal.operations.Quo;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +12,16 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 @Service
 public class QuotePriceDaoMapper {
+
+    private final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+    private final Lock readLock = rwl.readLock();
+    private final Lock writeLock = rwl.writeLock();
+
     @Resource
     private QuotePriceMapper quotePriceMapper;
 
@@ -24,7 +33,7 @@ public class QuotePriceDaoMapper {
      * @param quotePrice
      * @return List<CompanyQuotePrice>
      */
-    public List<CompanyQuotePrice> insertSelective(QuotePrice quotePrice) {
+    public List<CompanyQuotePrice> insertSelective(QuotePrice quotePrice) throws McException {
 
         // 插入数据之后，返回id
         insertValue(quotePrice);
@@ -34,7 +43,11 @@ public class QuotePriceDaoMapper {
             companyQuotePrices.get(i).setQuotePriceId(quotePrice.getQuotePriceId());
         }
         // 批量插入之后，返回id
-        companyQuotePriceDaoMapper.insertBatch(companyQuotePrices);
+        try {
+            companyQuotePriceDaoMapper.insertBatch(companyQuotePrices);
+        } catch (DataBaseException e) {
+            throw new McException("操作失败！",e.getExceptionCode());
+        }
         return companyQuotePrices;
     }
 
@@ -42,8 +55,16 @@ public class QuotePriceDaoMapper {
         quotePriceMapper.insertValue(quotePrice);
     }
 
-    public QuotePrice query(Map queryCondition) {
-        QuotePrice quotePrice = quotePriceMapper.query(queryCondition);
+    public QuotePrice query(Map queryCondition) throws DataBaseException {
+        QuotePrice quotePrice = null;
+        try {
+            readLock.lock();
+            quotePrice = quotePriceMapper.query(queryCondition);
+        } catch (DataBaseException e) {
+            throw new DataBaseException("查询quote_price异常！","DBE-5");
+        }finally {
+            readLock.unlock();
+        }
         return quotePrice;
     }
 }

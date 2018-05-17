@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.myvue.dao.ProjectObjectMapper" >
+  <resultMap id="BaseResultMap" type="com.example.myvue.model.ProjectObject" >
+    <id column="project_number" property="projectNumber" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="project_type" property="projectType" jdbcType="INTEGER" />
+    <result column="budget" property="budget" jdbcType="DOUBLE" />
+    <result column="open_time" property="openTime" jdbcType="TIMESTAMP" />
+    <result column="tender_id" property="tenderId" jdbcType="BIGINT" />
+    <result column="method_type" property="methodType" jdbcType="VARCHAR" />
+    <result column="ratio_price" property="ratioPrice" jdbcType="REAL" />
+    <result column="alert_ratio_price" property="alertRatioPrice" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    project_number, project_name, project_type, budget, open_time, tender_id, method_type, 
+    ratio_price, alert_ratio_price
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from project_object
+    where project_number = #{projectNumber,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from project_object
+    where project_number = #{projectNumber,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.myvue.model.ProjectObject" >
+    insert into project_object (project_number, project_name, project_type, 
+      budget, open_time, tender_id, 
+      method_type, ratio_price, alert_ratio_price
+      )
+    values (#{projectNumber,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, #{projectType,jdbcType=INTEGER}, 
+      #{budget,jdbcType=DOUBLE}, #{openTime,jdbcType=TIMESTAMP}, #{tenderId,jdbcType=BIGINT}, 
+      #{methodType,jdbcType=VARCHAR}, #{ratioPrice,jdbcType=REAL}, #{alertRatioPrice,jdbcType=REAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.myvue.model.ProjectObject" >
+    insert into project_object
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="projectNumber != null" >
+        project_number,
+      </if>
+      <if test="projectName != null" >
+        project_name,
+      </if>
+      <if test="projectType != null" >
+        project_type,
+      </if>
+      <if test="budget != null" >
+        budget,
+      </if>
+      <if test="openTime != null" >
+        open_time,
+      </if>
+      <if test="tenderId != null" >
+        tender_id,
+      </if>
+      <if test="methodType != null" >
+        method_type,
+      </if>
+      <if test="ratioPrice != null" >
+        ratio_price,
+      </if>
+      <if test="alertRatioPrice != null" >
+        alert_ratio_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="projectNumber != null" >
+        #{projectNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectType != null" >
+        #{projectType,jdbcType=INTEGER},
+      </if>
+      <if test="budget != null" >
+        #{budget,jdbcType=DOUBLE},
+      </if>
+      <if test="openTime != null" >
+        #{openTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tenderId != null" >
+        #{tenderId,jdbcType=BIGINT},
+      </if>
+      <if test="methodType != null" >
+        #{methodType,jdbcType=VARCHAR},
+      </if>
+      <if test="ratioPrice != null" >
+        #{ratioPrice,jdbcType=REAL},
+      </if>
+      <if test="alertRatioPrice != null" >
+        #{alertRatioPrice,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.myvue.model.ProjectObject" >
+    update project_object
+    <set >
+      <if test="projectName != null" >
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectType != null" >
+        project_type = #{projectType,jdbcType=INTEGER},
+      </if>
+      <if test="budget != null" >
+        budget = #{budget,jdbcType=DOUBLE},
+      </if>
+      <if test="openTime != null" >
+        open_time = #{openTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tenderId != null" >
+        tender_id = #{tenderId,jdbcType=BIGINT},
+      </if>
+      <if test="methodType != null" >
+        method_type = #{methodType,jdbcType=VARCHAR},
+      </if>
+      <if test="ratioPrice != null" >
+        ratio_price = #{ratioPrice,jdbcType=REAL},
+      </if>
+      <if test="alertRatioPrice != null" >
+        alert_ratio_price = #{alertRatioPrice,jdbcType=REAL},
+      </if>
+    </set>
+    where project_number = #{projectNumber,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.myvue.model.ProjectObject" >
+    update project_object
+    set project_name = #{projectName,jdbcType=VARCHAR},
+      project_type = #{projectType,jdbcType=INTEGER},
+      budget = #{budget,jdbcType=DOUBLE},
+      open_time = #{openTime,jdbcType=TIMESTAMP},
+      tender_id = #{tenderId,jdbcType=BIGINT},
+      method_type = #{methodType,jdbcType=VARCHAR},
+      ratio_price = #{ratioPrice,jdbcType=REAL},
+      alert_ratio_price = #{alertRatioPrice,jdbcType=REAL}
+    where project_number = #{projectNumber,jdbcType=VARCHAR}
+  </update>
+</mapper>

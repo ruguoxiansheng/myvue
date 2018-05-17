@@ -52,15 +52,15 @@ public class HttpAspect {
     @Around("pointCutMethod()")
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         Result<Object> result = new Result<>();
-        try {
+//        try {
             Object execResult = proceedingJoinPoint.proceed();
             result.setData(execResult);
             result.setMsg("操作成功");
             result.setStatus("1");
             return result;
-        } catch (Exception e) {
-            return exceptionHandle.exceptionGet(e);
-        }
+//        } catch (Exception e) {
+//            return exceptionHandle.exceptionGet(e);
+//        }
 //        if(result == null){
 //            return proceedingJoinPoint.proceed();
 //        }else {

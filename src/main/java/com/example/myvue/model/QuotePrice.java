@@ -36,7 +36,7 @@ public class QuotePrice {
     }
 
 
- private List<CompanyQuotePrice> companyQuotePriceList;
+     private List<CompanyQuotePrice> companyQuotePriceList;
 
     public List<CompanyQuotePrice> getCompanyQuotePriceList() {
         return companyQuotePriceList;

@@ -12,4 +12,6 @@ public interface UserPersonObjectMapper {
     int insertSelective(UserPersonObject upo) throws DataBaseException;
 
     int updateStatus(Map condition) throws  DataBaseException;
+
+    UserPersonObject selectAccordPhoneAndPassWord(Map condition);
 }

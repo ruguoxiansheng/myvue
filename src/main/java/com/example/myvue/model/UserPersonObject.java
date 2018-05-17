@@ -7,6 +7,8 @@ public class UserPersonObject {
 
     private String userName;
 
+    private String passWord;
+
     private String personAccountId;
 
     private Integer authoryType;
@@ -37,6 +39,14 @@ public class UserPersonObject {
 
     public void setUserName(String userName) {
         this.userName = userName == null ? null : userName.trim();
+    }
+
+    public String getPassWord() {
+        return passWord;
+    }
+
+    public void setPassWord(String passWord) {
+        this.passWord = passWord == null ? null : passWord.trim();
     }
 
     public String getPersonAccountId() {
