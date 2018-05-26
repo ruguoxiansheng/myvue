@@ -5,10 +5,12 @@ import com.example.myvue.myException.ExceptionHandle;
 import com.example.myvue.myException.McException;
 import com.example.myvue.myException.Result;
 import com.example.myvue.myannotation.LoginValid;
+import com.example.myvue.myannotation.ParamsValid;
 import com.example.myvue.service.ValidationService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2018/2/6.
@@ -78,8 +82,24 @@ public class HttpAspect {
      * @param proceedingJoinPoint
      */
     private void doValidBefore(ProceedingJoinPoint proceedingJoinPoint) throws McException, DataBaseException {
+
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
+
+        Method method = ((MethodSignature) proceedingJoinPoint.getSignature()).getMethod();
+
+        if ( method.isAnnotationPresent(ParamsValid.class)) {
+            Object[] args = proceedingJoinPoint.getArgs();
+            if (args == null || args.length == 0) {
+                throw new McException("字段校验不通过！","MCE-LOSE-PARAM");
+            }
+            Object arg = args[0];
+            if (arg == null || !(arg instanceof Map)) {
+                throw new McException("字段校验不通过！","MCE-LOSE-PARAM");
+            }
+            Map<String, Object> params = (Map<String, Object>) arg;
+            validationService.paramsValid(method.getAnnotation(ParamsValid.class),params);
+        }
 
         //url
         LOGGER.info("url={}",request.getRequestURL());

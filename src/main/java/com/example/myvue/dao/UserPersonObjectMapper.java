@@ -4,9 +4,8 @@ import com.example.myvue.model.UserPersonObject;
 import com.example.myvue.myException.DataBaseException;
 
 import java.util.Map;
-
 public interface UserPersonObjectMapper {
-
+    
     UserPersonObject selectAccordPhone(String phone) throws DataBaseException ;
 
     int insertSelective(UserPersonObject upo) throws DataBaseException;

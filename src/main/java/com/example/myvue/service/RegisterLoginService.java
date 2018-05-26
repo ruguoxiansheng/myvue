@@ -5,6 +5,7 @@ import com.example.myvue.daoService.InvalidCodeDaoMapper;
 import com.example.myvue.model.InvalidCode;
 import com.example.myvue.myException.DataBaseException;
 import com.example.myvue.myException.McException;
+import com.example.myvue.utils.EncryptAndDeencrypt;
 import com.example.myvue.utils.ToolsUtil;
 import com.example.myvue.daoService.UserPersonObjectDaoMapper;
 import com.example.myvue.model.UserPersonObject;
@@ -13,6 +14,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
@@ -72,7 +75,17 @@ public class RegisterLoginService {
         userPersonObject.setUserId(ToolsUtil.getUUID());
         userPersonObject.setPersonAccountId(ToolsUtil.getUUID());
         userPersonObject.setPhone(reqObj.getString("phone"));
-        userPersonObject.setPassWord(reqObj.getString("passWord"));
+        //密码加密，手机号，密码，盐一起加密
+        MessageDigest messageDigest;
+        try {
+            messageDigest   = MessageDigest.getInstance("SHA-256");
+            String[] params = {"phone","passWord"};
+            String salt = ToolsUtil.getUUID().substring(0,16);
+            String encryptPassword = EncryptAndDeencrypt.doEncrypt(reqObj,params,salt);
+            userPersonObject.setPassWord(encryptPassword);
+            userPersonObject.setSalt(salt);
+        } catch (NoSuchAlgorithmException e) {
+        }
         try {
             userPersonObjectDaoMapper.register(userPersonObject);
         } catch (DataBaseException e) {

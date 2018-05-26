@@ -6,6 +6,9 @@ import com.example.myvue.model.Account;
 import com.example.myvue.model.UserPersonObject;
 import com.example.myvue.myException.DataBaseException;
 import com.example.myvue.myException.McException;
+import com.example.myvue.utils.EncryptAndDeencrypt;
+import com.sun.tools.javac.util.Assert;
+import com.sun.tools.javac.util.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -97,9 +100,12 @@ public class UserPersonObjectDaoMapper {
             Map condition = new HashMap();
             condition.put("phone",reqObj.getString("phone"));
             condition.put("passWord",reqObj.getString("passWord"));
+            // 把手机号码，密码，盐一起生成加密字符串
+            String[] params = {"phone","passWord"};
+            String encryPassword = EncryptAndDeencrypt.doEncrypt(reqObj,params,upo.getSalt());
+
             // 验证手机号或者密码是否正确
-            UserPersonObject record = userPersonObjectMapper.selectAccordPhoneAndPassWord(condition);
-            if (null ==record) {
+            if (!encryPassword.equals(upo.getPassWord())) {
                 throw new McException("手机号或者密码错误！","MCE-3");
             }
             condition.put("status",1);

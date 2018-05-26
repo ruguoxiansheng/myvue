@@ -9,10 +9,11 @@
     <result column="person_account_id" jdbcType="VARCHAR" property="personAccountId" />
     <result column="authory_type" jdbcType="INTEGER" property="authoryType" />
     <result column="id_card_num" jdbcType="VARCHAR" property="idCardNum" />
+    <result column="salt" property="salt" jdbcType="VARCHAR" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
-    user_id, phone, user_name, pass_word, person_account_id, authory_type, id_card_num,
+    user_id, phone, user_name, pass_word, person_account_id, authory_type, id_card_num,salt,
     status
   </sql>
 
@@ -54,6 +55,9 @@
       <if test="idCardNum != null">
         id_card_num,
       </if>
+      <if test="salt != null">
+        salt,
+      </if>
       <if test="status != null">
         status,
       </if>
@@ -79,6 +83,9 @@
       </if>
       <if test="idCardNum != null">
         #{idCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},

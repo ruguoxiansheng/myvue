@@ -6,6 +6,7 @@ import com.example.myvue.daoService.InvalidCodeDaoMapper;
 import com.example.myvue.model.NetPage;
 import com.example.myvue.model.Student;
 import com.example.myvue.myException.McException;
+import com.example.myvue.myannotation.ParamsValid;
 import com.example.myvue.service.CalTenderService;
 import com.example.myvue.service.RegisterLoginService;
 import org.springframework.util.CollectionUtils;
@@ -56,10 +57,9 @@ public class RegisterLoginController {
      * @return
      * @throws Exception
      */
+    @ParamsValid(values="invalidCode,phone,passWord")
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = "application/json")
     public Object register(@RequestBody JSONObject reqObj) throws McException {
-        // 校验字段
-        String phone = reqObj.getString("phone");
         registerLoginService.register(reqObj);
         return true;
     }
@@ -70,10 +70,9 @@ public class RegisterLoginController {
      * @return 登陆成功之后，返回id
      * @throws McException
      */
+    @ParamsValid(values = "phone,passWord")
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
     public Object login(@RequestBody JSONObject reqObj) throws McException {
-        // 校验字段
-        String phone = reqObj.getString("phone");
        return registerLoginService.login(reqObj);
     }
 

@@ -15,6 +15,8 @@ public class UserPersonObject {
 
     private String idCardNum;
 
+    private String salt;
+
     private Integer status;
 
     public String getUserId() {
@@ -71,6 +73,14 @@ public class UserPersonObject {
 
     public void setIdCardNum(String idCardNum) {
         this.idCardNum = idCardNum == null ? null : idCardNum.trim();
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt == null ? null : salt.trim();
     }
 
     public Integer getStatus() {
