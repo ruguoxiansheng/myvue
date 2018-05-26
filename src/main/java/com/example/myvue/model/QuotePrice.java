@@ -1,15 +1,19 @@
 package com.example.myvue.model;
 
+
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.List;
-
 public class QuotePrice {
     private Long quotePriceId;
 
-    private Long consumerId;
+    private String consumerId;
 
     private String projectNumber;
+
+    private Integer k;
+
+    private Integer k2;
 
     public Long getQuotePriceId() {
         return quotePriceId;
@@ -19,11 +23,11 @@ public class QuotePrice {
         this.quotePriceId = quotePriceId;
     }
 
-    public Long getConsumerId() {
+    public String getConsumerId() {
         return consumerId;
     }
 
-    public void setConsumerId(Long consumerId) {
+    public void setConsumerId(String consumerId) {
         this.consumerId = consumerId;
     }
 
@@ -33,6 +37,22 @@ public class QuotePrice {
 
     public void setProjectNumber(String projectNumber) {
         this.projectNumber = projectNumber == null ? null : projectNumber.trim();
+    }
+
+    public Integer getK() {
+        return k;
+    }
+
+    public void setK(Integer k) {
+        this.k = k;
+    }
+
+    public Integer getK2() {
+        return k2;
+    }
+
+    public void setK2(Integer k2) {
+        this.k2 = k2;
     }
 
 
@@ -47,8 +67,11 @@ public class QuotePrice {
     }
 
     public  QuotePrice generator(JSONObject reqObj){
-        this.setConsumerId(reqObj.getLong("consumerId"));
+        this.setConsumerId(reqObj.getString("consumerId"));
         this.setProjectNumber(reqObj.getString("projectNumber"));
         this.setCompanyQuotePriceList(reqObj.getJSONArray("comitData").toJavaList(CompanyQuotePrice.class));
+        this.setK(reqObj.getInteger("k"));
+        this.setK2(reqObj.getInteger("k2"));
         return this;
-    }}
+    }
+}

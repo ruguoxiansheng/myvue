@@ -5,6 +5,6 @@
         insert into should_quote_price (should_price, project_number,
         consumer_id)
         values (#{shouldPrice,jdbcType=DOUBLE}, #{projectNumber,jdbcType=VARCHAR},
-        #{consumerId,jdbcType=BIGINT})
+        #{consumerId,jdbcType=VARCHAR})
     </insert>
 </mapper>

@@ -3,12 +3,13 @@ package com.example.myvue.dao;
 import com.example.myvue.model.QuotePrice;
 import com.example.myvue.myException.DataBaseException;
 
-import java.util.List;
 import java.util.Map;
 
 public interface QuotePriceMapper {
    
-    void insertValue(QuotePrice quotePrice);
+    void insertValue(QuotePrice quotePrice)  throws DataBaseException;
 
-    QuotePrice query(Map queryCondition) throws DataBaseException;
+    QuotePrice query(QuotePrice queryCondition);
+
+    QuotePrice selectRecord(QuotePrice quotePrice);
 }

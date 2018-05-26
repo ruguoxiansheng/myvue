@@ -23,10 +23,13 @@ public class ExceptionHandle {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public Result exceptionGet(Exception e){
-        if(e instanceof McException){
+        if(e instanceof McException ){
 //            DescribeException MyException = (DescribeException) e;
-            McException MyException = (McException) e;
-            return ResultUtil.error(MyException.getExceptionCode(), MyException.getMessage());
+            McException mcException = (McException) e;
+            return ResultUtil.error(mcException.getExceptionCode(), mcException.getMessage());
+        }else if (e instanceof  DataBaseException) {
+            DataBaseException dbException = (DataBaseException) e;
+            return ResultUtil.error(dbException.getExceptionCode(), dbException.getMessage());
         }
 
         LOGGER.error("【系统异常】{}",e);

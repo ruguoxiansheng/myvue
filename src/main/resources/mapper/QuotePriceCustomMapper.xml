@@ -14,17 +14,41 @@
   </insert>-->
 
   <insert id="insertValue" parameterType="com.example.myvue.model.QuotePrice" useGeneratedKeys="true" keyProperty="quotePriceId" keyColumn="quote_price_id">
-    insert into quote_price (quote_price_id,consumer_id,project_number)
+    insert into quote_price (quote_price_id,consumer_id,project_number,k,k2)
     values
-      (#{quotePriceId,jdbcType=BIGINT}, #{consumerId,jdbcType=BIGINT}, #{projectNumber,jdbcType=VARCHAR})
+      (#{quotePriceId,jdbcType=BIGINT}, #{consumerId,jdbcType=VARCHAR},
+      #{projectNumber,jdbcType=VARCHAR}, #{k, jdbcType=INTEGER},
+      #{k2, jdbcType=INTEGER})
   </insert>
 
-  <select  id="query" parameterType="Map" resultMap="BaseResultMap" >
+  <select  id="query" parameterType="com.example.myvue.model.QuotePrice" resultMap="BaseResultMap" >
       select * from quote_price where
-       consumer_id=#{consumerId,jdbcType=BIGINT}
+       consumer_id=#{consumerId,jdbcType=VARCHAR}
        and
        project_number=#{projectNumber,jdbcType=VARCHAR}
   </select>
 
+    <select  id="selectRecord" parameterType="com.example.myvue.model.QuotePrice" resultMap="UnionResultMap" >
+       select * from quote_price qp
+        left join company_quote_price cqp on qp.quote_price_id = cqp.quote_price_id
+        where qp.consumer_id=#{consumerId,jdbcType=BIGINT} and qp.project_number=#{projectNumber,jdbcType=VARCHAR}
+    </select>
+
+    <resultMap type="com.example.myvue.model.QuotePrice" id="UnionResultMap">
+        <id column="quote_price_id" jdbcType="BIGINT" property="quotePriceId" />
+        <result column="consumer_id" jdbcType="VARCHAR" property="consumerId" />
+        <result column="project_number" jdbcType="VARCHAR" property="projectNumber" />
+        <result column="k" jdbcType="INTEGER" property="k" />
+        <result column="k2" jdbcType="INTEGER" property="k2" />
+
+        <!-- property表示集合类型属性名称，ofType表示集合中的对象是什么类型 -->
+        <collection property="companyQuotePriceList" ofType="com.example.myvue.model.CompanyQuotePrice">
+            <id column="quote_id" jdbcType="BIGINT" property="quoteId" />
+            <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+            <result column="company_value" jdbcType="DOUBLE" property="companyValue" />
+            <result column="quote_price_id" jdbcType="BIGINT" property="quotePriceId" />
+            <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        </collection>
+    </resultMap>
 
 </mapper>

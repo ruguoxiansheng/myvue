@@ -5,7 +5,7 @@
     <id column="shoule_price_id" jdbcType="BIGINT" property="shoulePriceId" />
     <result column="should_price" jdbcType="DOUBLE" property="shouldPrice" />
     <result column="project_number" jdbcType="VARCHAR" property="projectNumber" />
-    <result column="consumer_id" jdbcType="BIGINT" property="consumerId" />
+    <result column="consumer_id" jdbcType="VARCHAR" property="consumerId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">

@@ -3,10 +3,13 @@
 <mapper namespace="com.example.myvue.dao.QuotePriceMapper">
   <resultMap id="BaseResultMap" type="com.example.myvue.model.QuotePrice">
     <id column="quote_price_id" jdbcType="BIGINT" property="quotePriceId" />
-    <result column="consumer_id" jdbcType="BIGINT" property="consumerId" />
+    <result column="consumer_id" jdbcType="VARCHAR" property="consumerId" />
     <result column="project_number" jdbcType="VARCHAR" property="projectNumber" />
+    <result column="k" jdbcType="INTEGER" property="k" />
+    <result column="k2" jdbcType="INTEGER" property="k2" />
   </resultMap>
   <sql id="Base_Column_List">
-    quote_price_id, consumer_id, project_number
+    quote_price_id, consumer_id, project_number, k, k2
   </sql>
+ 
 </mapper>

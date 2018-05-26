@@ -2,7 +2,7 @@ package com.example.myvue.model;
 
 import java.util.Date;
 
-public class CompanyQuotePrice {
+public class CompanyQuotePrice implements  Comparable<CompanyQuotePrice>  {
     private Long quoteId;
 
     private String companyName;
@@ -53,4 +53,28 @@ public class CompanyQuotePrice {
         this.createTime = createTime;
     }
 
+    @Override
+    public int compareTo(CompanyQuotePrice o) {
+        if (this.getCompanyValue() - o.getCompanyValue() >= 0) {
+            return 1;
+        }
+        return -1;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"quoteId\":")
+                .append(quoteId);
+        sb.append(",\"companyName\":\"")
+                .append(companyName).append('\"');
+        sb.append(",\"companyValue\":")
+                .append(companyValue);
+        sb.append(",\"quotePriceId\":")
+                .append(quotePriceId);
+        sb.append(",\"createTime\":\"")
+                .append(createTime).append('\"');
+        sb.append('}');
+        return sb.toString();
+    }
 }

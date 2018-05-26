@@ -9,7 +9,7 @@ public class ShouldQuotePrice {
 
     private String projectNumber;
 
-    private Long consumerId;
+    private String consumerId;
 
     private Date createTime;
 
@@ -37,11 +37,11 @@ public class ShouldQuotePrice {
         this.projectNumber = projectNumber == null ? null : projectNumber.trim();
     }
 
-    public Long getConsumerId() {
+    public String getConsumerId() {
         return consumerId;
     }
 
-    public void setConsumerId(Long consumerId) {
+    public void setConsumerId(String consumerId) {
         this.consumerId = consumerId;
     }
 

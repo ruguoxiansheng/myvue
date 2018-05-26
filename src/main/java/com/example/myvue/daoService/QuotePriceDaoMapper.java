@@ -4,12 +4,12 @@ import com.example.myvue.dao.QuotePriceMapper;
 import com.example.myvue.model.CompanyQuotePrice;
 import com.example.myvue.model.QuotePrice;
 import com.example.myvue.myException.DataBaseException;
-import com.example.myvue.myException.McException;
-import com.sun.org.apache.xpath.internal.operations.Quo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
@@ -33,38 +33,44 @@ public class QuotePriceDaoMapper {
      * @param quotePrice
      * @return List<CompanyQuotePrice>
      */
-    public List<CompanyQuotePrice> insertSelective(QuotePrice quotePrice) throws McException {
-
-        // 插入数据之后，返回id
+    @Transactional(propagation= Propagation.REQUIRED,isolation= Isolation.REPEATABLE_READ, rollbackFor = DataBaseException.class)
+    public List<CompanyQuotePrice> insertSelective(QuotePrice quotePrice) throws  DataBaseException {
+        // 插入数据到qp，返回id
         insertValue(quotePrice);
         List<CompanyQuotePrice> companyQuotePrices =quotePrice.getCompanyQuotePriceList();
         // 把id给对象
         for (int i = 0; i < companyQuotePrices.size();i++) {
             companyQuotePrices.get(i).setQuotePriceId(quotePrice.getQuotePriceId());
         }
-        // 批量插入之后，返回id
-        try {
-            companyQuotePriceDaoMapper.insertBatch(companyQuotePrices);
-        } catch (DataBaseException e) {
-            throw new McException("操作失败！",e.getExceptionCode());
-        }
+        companyQuotePriceDaoMapper.insertBatch(companyQuotePrices);
         return companyQuotePrices;
     }
-
-    private void insertValue(QuotePrice quotePrice) {
-        quotePriceMapper.insertValue(quotePrice);
+/*
+插入数据到Quote_price表中
+ */
+    private void insertValue(QuotePrice quotePrice) throws DataBaseException {
+        try {
+            quotePriceMapper.insertValue(quotePrice);
+        }catch (Exception e) {
+            throw new  DataBaseException("数据库插入异常！","DBE-C-QP");
+        }
     }
 
-    public QuotePrice query(Map queryCondition) throws DataBaseException {
+    public QuotePrice query(QuotePrice queryCondition) throws DataBaseException {
         QuotePrice quotePrice = null;
         try {
             readLock.lock();
             quotePrice = quotePriceMapper.query(queryCondition);
-        } catch (DataBaseException e) {
-            throw new DataBaseException("查询quote_price异常！","DBE-5");
+        } catch (Exception e) {
+            throw new DataBaseException("查询异常！","DBE-Q-QP");
         }finally {
             readLock.unlock();
         }
         return quotePrice;
+    }
+
+    public QuotePrice selectRecord(QuotePrice quotePrice) {
+        QuotePrice quotePriceRecord =   quotePriceMapper.selectRecord(quotePrice);
+        return quotePriceRecord;
     }
 }

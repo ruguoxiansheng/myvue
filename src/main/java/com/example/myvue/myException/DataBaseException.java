@@ -2,7 +2,9 @@ package com.example.myvue.myException;
 
 import org.apache.log4j.Logger;
 
-public class DataBaseException extends  Exception {
+import java.sql.SQLException;
+
+public class DataBaseException extends SQLException {
 
     Logger log = Logger.getLogger(DataBaseException.class);
 

@@ -20,7 +20,7 @@ import java.util.Map;
  * 注册，登陆控制层
  */
 @RestController
-@RequestMapping(value = "/vue")
+@RequestMapping(value = "/login")
 public class RegisterLoginController {
 
     @Resource

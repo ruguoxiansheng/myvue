@@ -6,5 +6,5 @@ import com.example.myvue.myException.DataBaseException;
 import java.util.List;
 
 public interface CompanyQuotePriceMapper {
-      void insertBatch(List<CompanyQuotePrice> companyQuotePrices) throws DataBaseException;
+      void insertBatch(List<CompanyQuotePrice> companyQuotePrices);
 }

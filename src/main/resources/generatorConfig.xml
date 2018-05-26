@@ -47,7 +47,7 @@
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
         <!-- 指定数据库表 -->
-        <table tableName="project_object" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+        <table tableName="quote_price" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                enableUpdateByExample="false"></table>
     </context>
 </generatorConfiguration>

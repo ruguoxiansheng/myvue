@@ -18,14 +18,17 @@ public class CompanyQuotePriceDaoMapper {
     private final Lock writeLock = rwl.writeLock();
     @Resource
     private CompanyQuotePriceMapper companyQuotePriceMapper;
+
+
     public void insertBatch(List<CompanyQuotePrice> companyQuotePrices) throws DataBaseException {
-        try {
-            writeLock.lock();
-            companyQuotePriceMapper.insertBatch(companyQuotePrices);
-        } catch (DataBaseException e) {
-           throw new DataBaseException("批量插入company_quote_price失败！","DBE-6");
-        }finally {
-            writeLock.unlock();
-        }
+       try {
+           writeLock.lock();
+           companyQuotePriceMapper.insertBatch(companyQuotePrices);
+       }catch (Exception e) {
+            throw new DataBaseException("批量插入异常！","DBE-C-CQP");
+       }finally {
+           writeLock.unlock();
+       }
+
     }
 }

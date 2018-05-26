@@ -3,16 +3,14 @@ package com.example.myvue.dao;
 import com.example.myvue.model.ProjectObject;
 import com.example.myvue.myException.DataBaseException;
 
+import java.util.List;
+import java.util.Map;
+
 public interface ProjectObjectMapper {
-    int deleteByPrimaryKey(String projectNumber);
 
-    int insert(ProjectObject record);
 
-    int insertSelective(ProjectObject record);
+    ProjectObject selectByPrimaryKey(String projectNumber);
 
-    ProjectObject selectByPrimaryKey(String projectNumber) throws DataBaseException;
 
-    int updateByPrimaryKeySelective(ProjectObject record);
-
-    int updateByPrimaryKey(ProjectObject record);
+    List<ProjectObject> queryProjectAccordDate(Map<String, String> condition);
 }

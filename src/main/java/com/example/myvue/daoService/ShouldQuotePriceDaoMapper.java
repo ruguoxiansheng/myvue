@@ -18,7 +18,7 @@ public class ShouldQuotePriceDaoMapper {
     public void insert(ShouldQuotePrice shouleQuotePrice) throws DataBaseException {
         try {
             shouldQuotePriceMapper.insert(shouleQuotePrice);
-        } catch (DataBaseException e) {
+        } catch (Exception e) {
             throw new DataBaseException("插入should_quote_price异常!","DBE-7");
         }
     }

@@ -5,5 +5,5 @@ import com.example.myvue.myException.DataBaseException;
 
 public interface ShouldQuotePriceMapper {
 
-    int insert(ShouldQuotePrice record) throws DataBaseException;
+    int insert(ShouldQuotePrice record);
 }

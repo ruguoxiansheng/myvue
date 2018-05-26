@@ -11,7 +11,7 @@ public class ProjectObject {
 
     private Double budget;
 
-    private Date openTime;
+    private String openTime;
 
     private Long tenderId;
 
@@ -53,11 +53,11 @@ public class ProjectObject {
         this.budget = budget;
     }
 
-    public Date getOpenTime() {
+    public String getOpenTime() {
         return openTime;
     }
 
-    public void setOpenTime(Date openTime) {
+    public void setOpenTime(String openTime) {
         this.openTime = openTime;
     }
 

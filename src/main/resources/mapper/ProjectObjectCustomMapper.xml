@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.myvue.dao.ProjectObjectMapper" >
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from project_object
+    where project_number = #{projectNumber,jdbcType=VARCHAR}
+  </select>
+
+  <select id="queryProjectAccordDate" resultMap="BaseResultMap" parameterType="Map" >
+    select
+    <include refid="Base_Column_List" />
+    from project_object
+    where 1=1
+    <if test="openTime != null" >
+      and str_to_date(open_time,'%Y-%m-%d') = str_to_date(#{openTime}, '%Y-%m-%d')
+    </if>
+  </select>
+
+
+</mapper>

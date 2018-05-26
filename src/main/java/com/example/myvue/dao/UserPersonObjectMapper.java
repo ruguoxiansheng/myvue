@@ -14,4 +14,6 @@ public interface UserPersonObjectMapper {
     int updateStatus(Map condition) throws  DataBaseException;
 
     UserPersonObject selectAccordPhoneAndPassWord(Map condition);
+
+    UserPersonObject selectByPrimaryKey(String userId);
 }

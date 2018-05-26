@@ -2,11 +2,15 @@ package com.example.myvue.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.myvue.daoService.HistoryQueryService;
 import com.example.myvue.model.NetPage;
+import com.example.myvue.model.ProQuotePrice;
 import com.example.myvue.model.QuotePrice;
 import com.example.myvue.model.Student;
+import com.example.myvue.myannotation.LoginValid;
 import com.example.myvue.service.CalTenderService;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -19,31 +23,15 @@ import java.util.Map;
  * Created by Administrator on 2018/4/19.
  */
 @RestController
-@RequestMapping(value = "/vue")
+@RequestMapping(value = "/app")
+@LoginValid
 public class MyvueController {
     @Resource
     private CalTenderService calTenderService;
-    /**
-     * 页面查询
-     *
-     * @param reqObj
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping(value = "/option1", method = RequestMethod.POST, consumes = "application/json")
-    public Object open(@RequestBody JSONObject reqObj) throws Exception {
-        NetPage netPage = new NetPage();
-        List<Student> students = new ArrayList<>();
-        for (int i = 0; i <10;i++) {
-            String name = "张"+i;
-            String address = "张家村"+i;
-            students.add( new Student(name,i+1,i+15,address));
-        }
-        netPage.setPageData(students);
-        netPage.setTotalSize(students.size());
-//        throw new Exception("测试错误！");
-        return netPage;
-    }
+
+    @Resource
+    private HistoryQueryService historyQueryService;
+
 
     /**
      * 这个接口的作用是计算标底价格
@@ -53,23 +41,47 @@ public class MyvueController {
      */
     @RequestMapping(value = "/calTender", method = RequestMethod.POST, consumes = "application/json")
     public Object calTender(@RequestBody JSONObject comitObj) throws Exception {
-        calTenderService.calCulateQuotePrice(comitObj);
-        return null;
+        String result = calTenderService.calCulateQuotePrice(comitObj);
+        return result;
     }
 
     /**
      * 这个接口的作用是异步调用根据用户的id，项目编号，判断用户是否计算过
-     * @param reqObj
+     * @param quotePrice
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/alreadyCalTender", method = RequestMethod.POST, consumes = "application/json")
-    public Object alreadyCalTender(@RequestBody JSONObject reqObj) throws Exception {
-        Map queryCondition = JSON.toJavaObject(reqObj,Map.class);
-        if (CollectionUtils.isEmpty(queryCondition)) {
-                throw new Exception("请传入查询条件");
-        }
+    public Object alreadyCalTender(@RequestBody QuotePrice quotePrice) throws Exception {
         // 根据项目编号查询项目是否存在，不存在就抛异常
-        return calTenderService.queryAlreadyCalTender(queryCondition);
+        //校验项目编号是否合法
+        return calTenderService.queryAlreadyCalTender(quotePrice);
+    }
+
+
+    /**
+     * 这个接口的作用是根据开标的时间，查询到当前的开标项目
+     * @param reqObj
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/queryProject", method = RequestMethod.POST, consumes = "application/json")
+    public Object alreadyCalTender(@RequestBody JSONObject reqObj) throws Exception {
+        return calTenderService.queryProject(reqObj);
+    }
+
+
+    /**
+     * 这个接口的作用是查询用户上传的历史记录
+     * @param quotePrice
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/queryComitHistory", method = RequestMethod.POST, consumes = "application/json")
+    public Object queryComitHistory(@RequestBody QuotePrice quotePrice) throws Exception {
+
+     QuotePrice quotePriceRecord =   historyQueryService.queryComit(quotePrice);
+
+     return quotePriceRecord;
     }
 }

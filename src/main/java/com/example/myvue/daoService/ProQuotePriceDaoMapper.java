@@ -18,8 +18,8 @@ public class ProQuotePriceDaoMapper {
     public void insetBatch(List<ProQuotePrice> proQuotePrices) throws DataBaseException {
         try {
             proquotePriceMapper.insertBatch(proQuotePrices);
-        } catch (DataBaseException e) {
-            throw new DataBaseException("批量插入pro_quote_price表失败！","DBE-8");
+        } catch (Exception e) {
+            throw new DataBaseException("批量插入pro_quote_price表失败！","DBE-I-PQP");
         }
     }
 }

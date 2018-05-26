@@ -35,7 +35,7 @@ public class UserPersonObjectDaoMapper {
         try {
             readLock.lock();
             upo = userPersonObjectMapper.selectAccordPhone(phone);
-        } catch (DataBaseException e) {
+        } catch (Exception e) {
             throw  new DataBaseException("查询异常！","DBE-2");
         }finally {
             readLock.unlock();
@@ -51,9 +51,11 @@ public class UserPersonObjectDaoMapper {
             writeLock.lock();
             UserPersonObject upoRecord = userPersonObjectMapper.selectAccordPhone(upo.getPhone());
             if (upoRecord !=null){
-                throw new DataBaseException("用户已经注册！","DBE-4");
+                throw new DataBaseException("用户已经注册！","DBE-Q-UPO");
             }
             insertSelective(upo);
+        }catch (Exception e){
+            throw new DataBaseException("查询异常！","DBE-UPO");
         }finally {
             writeLock.unlock();
         }
@@ -107,6 +109,25 @@ public class UserPersonObjectDaoMapper {
             throw new DataBaseException("数据库异常","DBE-3");
         }finally {
             writeLock.unlock();
+        }
+    }
+
+    public UserPersonObject selectByPrimaryKey(String userId) throws DataBaseException {
+        try {
+            UserPersonObject upoRecord = userPersonObjectMapper.selectByPrimaryKey(userId);
+            return upoRecord;
+        }catch (Exception e) {
+            throw new DataBaseException("数据库查询异常！","DBE-UPO");
+        }
+    }
+
+    // 根据用户的id去查询用户是否存在
+    public UserPersonObject  selectAccordUserId(String userId) throws DataBaseException {
+        try {
+           UserPersonObject upo =  userPersonObjectMapper.selectByPrimaryKey(userId);
+           return  upo;
+        }catch (Exception e){
+            throw  new DataBaseException("数据库查询异常！","DBE-UPO");
         }
     }
 }
