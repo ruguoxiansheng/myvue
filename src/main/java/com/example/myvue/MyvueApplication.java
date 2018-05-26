@@ -9,7 +9,7 @@ import org.springframework.web.cors.CorsConfiguration;
 
 @SpringBootApplication
 @MapperScan("com.example.myvue.dao")
-@ServletComponentScan
+//@ServletComponentScan
 public class MyvueApplication {
 
 	public static void main(String[] args) {
